@@ -47,34 +47,24 @@ A Sproingg message is a JSON imitation of an email MIME multipart object as foll
 
 <pre>
 	{
-	# couchdb preamble
-		_id: <uuid>,
-	    _rev: <uuid>,
-	# RFC 822-like	
-		headers: {
-
-		from: <string>,
-		to: <string>,
-		... RFC822 like	
-
-		},
-	# message text body	
-		body: <UTF-8 string>,
-	# binary attachments	
-		_attachments: {
-
-			mime : [
-
-			attachment1: { stuff that looks like MIME subpart },
-			attachment2: { stuff that looks like MIME subpart },
-			...
-
-
-			]
-		}
+	  # couchdb preamble
+	    _id: uuid,
+	   _rev: uuid,
+	    headers: {
+	 	       from: string,
+	 	       to: string,
+                       ...
+		     },
+	    body: UTF-8 string,
+	    _attachments: {
+			     mime :[
+			             attachment1: { stuff that looks like MIME subpart },
+			             attachment2: { stuff that looks like MIME subpart },
+			             ...
+                                   ]
+		           }
 
 	}
-
 </pre>	
 
 
