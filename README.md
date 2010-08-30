@@ -47,8 +47,7 @@ A Sproingg message is a JSON imitation of an email MIME multipart object as foll
 
 <pre>
 	{
-	  # couchdb preamble
-	    _id: uuid,
+	   _id: uuid,
 	   _rev: uuid,
 	    headers: {
 	 	       from: string,
@@ -66,15 +65,6 @@ A Sproingg message is a JSON imitation of an email MIME multipart object as foll
 
 	}
 </pre>	
-
-
-
-
-
-
-
-
-
 
 What does a Sproingg message queue look like?
 -----------------------------------------------
