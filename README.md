@@ -20,7 +20,11 @@ To separate CouchDB's being used as Sproingg endpoints from regular CouchDB's th
 How do you express the address of a Sproingg endpoint?
 ------------------------------------------------------
 
-A Sproingg endpoint is a CouchDB host with a set of mandatory databases, one of which is sphead (sproingg head, kinda like postmaster in email). Only admin users are allowed to access sphead db.  A typical Sproingg host has a base URL of the form http://mydomain.com:3939/sphead, alternately a URL of the form.  Note that :3939 is not required but /sphead is required.  Hence given any arbitrary known CouchDB installation, if it has an sphead database then it is assumed to be a Sproingg endpoint.  A CouchDB instance may continue to serve database duties while serving Sproingg requests at the same time.
+A Sproingg endpoint is a CouchDB host with a set of mandatory databases, one of which is sphead (sproingg head, kinda like postmaster in email). Only admin users are allowed to access sphead db.  
+
+A typical Sproingg host has a base URL of the form http://mydomain.com:3939/sphead, alternately a URL of the form.  Note that :3939 is not required but /sphead is required. Hence given any arbitrary known CouchDB installation, if it has an sphead database then it is assumed to be a Sproingg endpoint.  
+
+A CouchDB instance may continue to serve database duties while serving Sproingg requests at the same time.
 
 How are Sproingg addresses discovered?
 ----------------------------------------
