@@ -75,7 +75,7 @@ It's possible also that the message queue could be an Erlang implementation.
 What does a Sproingg user database look like?
 -----------------------------------------------
 
-For now its exactly the _user db in a Sproingg host.  When a host is used for both Sproinggy and non-Sproinggy purposes the _user db will need to be managed with a lot more care to avoid auth leakage.
+For now its exactly the user db in a Sproingg host.  When a host is used for both Sproinggy and non-Sproinggy purposes the user db will need to be managed with a lot more care to avoid auth leakage.
 
 What does a Sproingg inbox look like? 
 ------------------------------------
@@ -85,12 +85,13 @@ It is a database owned by the inbox owner - only the CouchDB processes can write
 Why the name Sproingg?
 ---------------------
 
-Sproingg sprung out of Couch like a ... spring, making the loud sound "Sproingg!!" in the middle of the night.
-No one new what had happened till it .. well dawned on them in the morning.
-
 Sproingg is surprising, spontaneous, unexpected and fun all of which are suggested by the sound "Sproingg!".
-It is required to use an exclamation mark as in Sproingg! as the mere Sproingg does not catch the spirit of it.
-When speaking the word Sproingg! as extended 'g' sound as well as wide eyes and the expression of a jack-in-the-box are suggested.
+It is required to use an exclamation mark as in "Sproingg!" as the mere "Sproingg" does not catch the spirit of it.
+When speaking the word Sproingg! an extended 'nggg' sound as well as wide eyes and the expression of a jack-in-the-box are suggested.
+
+Sproingg sprung out of Couch like a ... spring, making the loud sound "Sproingg!!" in the middle of the night.
+No one knew what had happened till it .. well dawned on them in the morning.
+
 
 Does Sproingg have an acronymal (yes I did make up that word) interpretation?
 -----------------------------------------------------------------------------
