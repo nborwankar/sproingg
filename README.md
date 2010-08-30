@@ -98,4 +98,4 @@ Does Sproingg have an acronymal (yes I did make up that word) interpretation?
 
 You had to go there did you? Oh well. Here goes.
 
-SPROINGG: *SP*ecial *R*eplication *O*riented *I*nter*N*et *G*ee*G*aw
+SPROINGG: **SP**ecial **R**eplication **O**riented **I**nter**N**et **G**ee**G**aw
