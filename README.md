@@ -20,16 +20,16 @@ To separate CouchDB's being used as Sproingg endpoints from regular CouchDB's th
 How do you express the address of a Sproingg endpoint?
 ------------------------------------------------------
 
-A Sproingg endpoint is a CouchDB host with a set of mandatory databases, one of which is sphead (sproingg head, kinda like postmaster in email). Only admin users are allowed to access sphead db.  
+A Sproingg endpoint is a CouchDB host with a set of mandatory databases, one of which is sproingg. Only admin users are allowed to access sproingg db.  
 
-* A typical Sproingg host has a base URL of the form http://mydomain.com:3939/sphead, alternately a URL of the form.  Note that :3939 is not required but /sphead is required. Hence given any arbitrary known CouchDB installation, if it has an sphead database then it is assumed to be a Sproingg endpoint.  
+* A typical Sproingg host has a base URL of the form http://mydomain.com:3939/sproingg.  Note that :3939 is not required but /sproingg is required. Hence given any arbitrary known CouchDB installation, if it has an sproingg database then it is assumed to be a Sproingg endpoint.  
 
 A CouchDB instance may continue to serve database duties while serving Sproingg requests at the same time.
 
 How are Sproingg addresses discovered?
 ----------------------------------------
 
-Initial list of Sproingg hosts will be created at sproingg.com/info
+An initial list of Sproingg hosts will be created at sproingg.com/info (or maybe sproingg.couchone.com/info)
 
 How does one initiate a Sproingg session?
 -------------------------------------------
@@ -39,6 +39,12 @@ The sender host starts with an initial request to inquire whether the recipient 
 A positive response from the responding host is followed by a second request from the sender host to inquire if a specific named recipient exists in the _user db.
 Assuming we have reached so far the Sproingg sender initiates a CouchDB replication pushing a Sproingg message on to the recipient hosts message queue via some filtered replication (TBD) that is expected to be present in a Sproingg host.
 All of the above to be made specific in terms of endpoints, update handlers etc
+
+In an early experimental phase we will have a small trusted group of users all of whom have a Sproingg host.
+During this phase there will be no "Sproingg protocol".
+
+During the experimental phase we assume that every one has a couchdb database called Inbox that allows a whitelist of users to push replicate to it.  Similarly everyone has a database called Outbox which is used as a container of messages to be replicated to someone elses Inbox.
+
 
 What does a Sproingg message look like?
 -----------------------------------------
@@ -71,11 +77,14 @@ What does a Sproingg message queue look like?
 It's a database with each document a Sproingg message.
 A message queue is probably optimally implemented using node.js + redis for reasons related to the number of writes, the frequency of deletes and the need for parallelism and async processing of each message as it comes in.
 It's possible also that the message queue could be an Erlang implementation.
+But for now it's just a couchdb database called Outbox.
 
 What does a Sproingg user database look like?
 -----------------------------------------------
 
 For now its exactly the user db in a Sproingg host.  When a host is used for both Sproinggy and non-Sproinggy purposes the user db will need to be managed with a lot more care to avoid auth leakage.
+
+But for now we'll just use a host which is used only for Sproingg and all entries in the _user database are in the whitelist and vice versa.
 
 What does a Sproingg inbox look like? 
 ------------------------------------
