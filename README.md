@@ -61,16 +61,31 @@ A Sproingg message is a JSON imitation of an email MIME multipart object as foll
                        ...
 		     },
 	    body: UTF-8 string,
-	    _attachments: {
+	    attachments: {
 			     mime :[
-			             attachment1: { stuff that looks like MIME subpart },
-			             attachment2: { stuff that looks like MIME subpart },
+			             some_attachment: { 
+				            //stuff that looks like MIME subpart 
+							part_headers: {...}
+							part_body: { base64 encoded chunk }
+						    
+						},
+			             some_other_attachment: { 
+				            //stuff that looks like MIME subpart 
+							part_headers: {...}
+							part_body: { base64 encoded chunk }
+				         
+				        }
 			             ...
-                                   ]
-		           }
+                       ]
+		}
 
 	}
 </pre>	
+
+*For now*, it is strictly a non-goal to have a full 1-1 JSON-Mime mappability for the full spectrum of mime document structures, multipart subtypes and arbitrary nestability.  Our current focus is on a good-enough message structure that allows meta data in the form of an arbitrary set of headers and a text body, with a flat array of attachments where the attachment can have headers like mime parts.
+However, right now, we are not focusing on gatewaying to email.  Sproingg is NOT email in JSON over HTTP.
+ 
+
 
 What does a Sproingg message queue look like?
 -----------------------------------------------
