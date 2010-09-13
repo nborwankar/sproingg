@@ -61,30 +61,31 @@ A Sproingg message is a JSON imitation of an email MIME multipart object as foll
                        ...
 		     },
 	    body: UTF-8 string,
-	    attachments: {
-			     mime :[
-			             some_attachment: { 
-				            //stuff that looks like MIME subpart 
-							part_headers: {...}
-							part_body: { base64 encoded chunk }
-						    
-						},
-			             some_other_attachment: { 
-				            //stuff that looks like MIME subpart 
-							part_headers: {...}
-							part_body: { base64 encoded chunk }
-				         
-				        }
-			             ...
-                       ]
+	    _attachments: {
+						    "foo":
+						    {
+						      "content_type":"application/octet-stream",
+						      "data": <some 8bit data>
+						    },
+
+						   "bar":
+						    {
+						      "content_type":"application/octet-stream",
+						      "data": <some other data>
+						    }			             
+						
+						...
+                       
 		}
 
 	}
 </pre>	
 
-*For now*, it is strictly a non-goal to have a full 1-1 JSON-Mime mappability for the full spectrum of mime document structures, multipart subtypes and arbitrary nestability.  Our current focus is on a good-enough message structure that allows meta data in the form of an arbitrary set of headers and a text body, with a flat array of attachments where the attachment can have headers like mime parts.
+Note: *For now* the content-type headers for all attachments must be "application/octet-stream" only so as to avoid XSS attacks via attached HTML+JS which can be executed with some other content-types. Content-Type application/octet-stream prevents inline "disposition" of HTML+JS.
+
+*For now*, it is strictly a non-goal to have a full 1-1 JSON-Mime mappability for the full spectrum of mime document structures, multipart subtypes and arbitrary nestability.  Our current focus is on a good-enough message structure that allows meta data in the form of an arbitrary set of headers and a text body, with a flat array of attachments.
 However, right now, we are not focusing on gatewaying to email.  Sproingg is NOT email in JSON over HTTP.
- 
+Sproingg is an experiment in p2p messaging over HTTP using CouchDB replication.
 
 
 What does a Sproingg message queue look like?
