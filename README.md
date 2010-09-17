@@ -15,7 +15,6 @@ Does Sproingg work over vanilla CouchDB or does it need extensions?
 
 The goal is to work on vanilla CouchDB with some specific configuration for databases, some mandatory user(s), specific views and a CouchApp to embody all or large parts of it all (TBD).
 
-To separate CouchDB's being used as Sproingg endpoints from regular CouchDB's the only difference (experimental) is to run the CouchDB to listen on a special port 3939.
 
 How do you express the address of a Sproingg endpoint?
 ------------------------------------------------------
@@ -31,62 +30,27 @@ How are Sproingg addresses discovered?
 
 An initial list of Sproingg hosts will be created at sproingg.com/info (or maybe sproingg.couchone.com/info)
 
-How does one initiate a Sproingg session?
--------------------------------------------
-
-Sproingg sessions are *currently* loosely based on SMTP.  This may change.
-The sender host starts with an initial request to inquire whether the recipient host supports Sproingg i.e has an /sphead endpoint.
-A positive response from the responding host is followed by a second request from the sender host to inquire if a specific named recipient exists in the _user db.
-Assuming we have reached so far the Sproingg sender initiates a CouchDB replication pushing a Sproingg message on to the recipient hosts message queue via some filtered replication (TBD) that is expected to be present in a Sproingg host.
-All of the above to be made specific in terms of endpoints, update handlers etc
-
-In an early experimental phase we will have a small trusted group of users all of whom have a Sproingg host.
-During this phase there will be no "Sproingg protocol".
-
-During the experimental phase we assume that every one has a couchdb database called Inbox that allows a whitelist of users to push replicate to it.  Similarly everyone has a database called Outbox which is used as a container of messages to be replicated to someone elses Inbox.
-
-
 What does a Sproingg message look like?
 -----------------------------------------
 
-A Sproingg message is a JSON imitation of an email MIME multipart object as follows
+Any JSON document can be "sproingg enabled" easily by adding a "sproingg" attribute to it.
+Sproingg enabled documents acquire full "sproingginess" and become routable by including a "sproingg" attribute.
+
+A Sproingg attribute (which will get attached to a document) is of the following form:-
 
 <pre>
-	{
-	   _id: uuid,
-	   _rev: uuid,
-	    headers: {
-	 	       from: string,
-	 	       to: string,
-                       ...
-		     },
-	    body: UTF-8 string,
-	    _attachments: {
-						    "foo":
-						    {
-						      "content_type":"application/octet-stream",
-						      "data": <some 8bit data>
-						    },
-
-						   "bar":
-						    {
-						      "content_type":"application/octet-stream",
-						      "data": <some other data>
-						    }			             
-						
-						...
-                       
-		}
-
-	}
-</pre>	
-
-Note: *For now* the content-type headers for all attachments must be "application/octet-stream" only so as to avoid XSS attacks via attached HTML+JS which can be executed with some other content-types. Content-Type application/octet-stream prevents inline "disposition" of HTML+JS.
-
-*For now*, it is strictly a non-goal to have a full 1-1 JSON-Mime mappability for the full spectrum of mime document structures, multipart subtypes and arbitrary nestability.  Our current focus is on a good-enough message structure that allows meta data in the form of an arbitrary set of headers and a text body, with a flat array of attachments.
-However, right now, we are not focusing on gatewaying to email.  Sproingg is NOT email in JSON over HTTP.
+sproingg:	{
+	 	       	from: string,
+	 	       	to: string,
+	           	date: ISO date string,	
+	                      ...
+	              [ other  optional headers ]
+					      ...	               
+			}	
+</pre>
+	
+Right now, we are not focusing on gatewaying to email.  Sproingg is NOT email in JSON over HTTP.
 Sproingg is an experiment in p2p messaging over HTTP using CouchDB replication.
-
 
 What does a Sproingg message queue look like?
 -----------------------------------------------
@@ -95,12 +59,10 @@ A message queue is probably optimally implemented using node.js + redis for reas
 It's possible also that the message queue could be an Erlang implementation.
 But for now it's just a couchdb database called Outbox.
 
-What does a Sproingg user database look like?
------------------------------------------------
+What does a Sproingg user db look like?
+---------------------------------------
 
-For now its exactly the user db in a Sproingg host.  When a host is used for both Sproinggy and non-Sproinggy purposes the user db will need to be managed with a lot more care to avoid auth leakage.
-
-But for now we'll just use a host which is used only for Sproingg and all entries in the _user database are in the whitelist and vice versa.
+*For now* we assume that a Sproingg user has their own Couch instance in which there is only one user and they have admin rights to all the db's in the instance.  So the user db maybe unnecessary or has a single user who has the _admin role.
 
 What does a Sproingg inbox look like? 
 ------------------------------------
